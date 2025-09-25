@@ -41,24 +41,46 @@ export default function HomePage() {
   const [inputType, setInputType] = useState<InputType>('file');
   const [result, setResult] = useState<FullResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
 
   // State for the text form
   const [transcript, setTranscript] = useState<string>(sampleTranscript);
   const [selectedModel, setSelectedModel] = useState<string>('gemini-1.5-flash');
 
   const startAnalysis = async () => {
+    // Check which input type is active
+    if (inputType === 'file' && !file) {
+      setError("Please select a file to analyze.");
+      return;
+    }
     setAppState('processing');
     setError(null);
 
-    const requestBody = inputType === 'text'
-      ? { transcript, model: selectedModel }
-      : { model: selectedModel };
+    // const requestBody = inputType === 'text'
+    //   ? { transcript, model: selectedModel }
+    //   : { model: selectedModel };
 
     try {
+      let body;
+      const headers: Record<string, string> = {};
+
+      if (inputType === 'text') {
+        // For text, we send JSON
+        headers['Content-Type'] = 'application/json';
+        body = JSON.stringify({ transcript, model: selectedModel });
+      } else {
+        // For files, we send FormData
+        const formData = new FormData();
+        formData.append('file', file!);
+        formData.append('model', selectedModel);
+        body = formData;
+        // NOTE: Do NOT set Content-Type header for FormData, the browser does it automatically
+      }
+
       const response = await fetch("/api/analyze", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(requestBody),
+        headers,
+        body,
       });
 
       if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
@@ -73,7 +95,7 @@ export default function HomePage() {
       setAppState('error');
     }
   };
-  
+
   const handleReset = () => {
     setAppState('idle');
     setResult(null);
@@ -82,10 +104,10 @@ export default function HomePage() {
 
   const renderInputComponent = () => {
     if (inputType === 'file') {
-      return <FileUpload onFileUpload={startAnalysis} isLoading={appState === 'processing'} />;
+      return <FileUpload onFileSelect={setFile} file={file} isLoading={appState === 'processing'} onFileUpload={startAnalysis} />;
     }
     return (
-      <AnalysisForm 
+      <AnalysisForm
         transcript={transcript}
         setTranscript={setTranscript}
         selectedModel={selectedModel}
@@ -137,11 +159,11 @@ export default function HomePage() {
         )}
 
         {appState === 'error' && (
-           <div className="text-center mt-8">
-              <button onClick={handleReset} className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg">
-                Try Again
-              </button>
-            </div>
+          <div className="text-center mt-8">
+            <button onClick={handleReset} className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg">
+              Try Again
+            </button>
+          </div>
         )}
       </div>
     </main>

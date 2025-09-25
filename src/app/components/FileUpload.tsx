@@ -6,11 +6,13 @@ import { useDropzone, FileRejection } from 'react-dropzone';
 interface FileUploadProps {
   onFileUpload: () => void;
   isLoading: boolean;
+  file: File | null;
+  onFileSelect: (file: File | null) => void;
 }
 
-export const FileUpload = ({ onFileUpload, isLoading }: FileUploadProps) => {
+export const FileUpload = ({ onFileUpload, isLoading, file, onFileSelect }: FileUploadProps) => {
   // State to hold the selected file object
-  const [file, setFile] = useState<File | null>(null);
+  // const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const onDrop = useCallback((acceptedFiles: File[], fileRejections: FileRejection[]) => {
@@ -23,9 +25,9 @@ export const FileUpload = ({ onFileUpload, isLoading }: FileUploadProps) => {
     }
 
     if (acceptedFiles.length > 0) {
-      setFile(acceptedFiles[0]);
+      onFileSelect(acceptedFiles[0]);
     }
-  }, []);
+  }, [onFileSelect]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -90,3 +92,7 @@ export const FileUpload = ({ onFileUpload, isLoading }: FileUploadProps) => {
     </div>
   );
 };
+
+function setFile(arg0: null) {
+  throw new Error('Function not implemented.');
+}

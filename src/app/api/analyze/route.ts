@@ -2,8 +2,13 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextRequest, NextResponse } from "next/server";
+import { AssemblyAI } from 'assemblyai';
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
+
+const assemblyClient = new AssemblyAI({
+  apiKey: process.env.ASSEMBLYAI_API_KEY || "",
+});
 const ALLOWED_MODELS = ["gemini-1.5-flash", "gemini-1.5-pro"];
 
 // ---- NEW: Simulate a Transcription & Diarization Service ----
@@ -71,42 +76,70 @@ The JSON object must have the following structure:
 
 export async function POST(req: NextRequest) {
   try {
-    const { transcript, model: selectedModel } = await req.json();
+    const contentType = req.headers.get('content-type') || '';
 
-    if (!selectedModel || !ALLOWED_MODELS.includes(selectedModel)) {
-      return NextResponse.json({ error: "Invalid model selected." }, { status: 400 });
-    }
+    // --- PATH 1: Handle Audio/Video File Upload ---
+    if (contentType.includes('multipart/form-data')) {
+      const formData = await req.formData();
+      const file = formData.get('file') as File | null;
+      const selectedModel = formData.get('model') as string;
 
-    // --- NEW: DUAL LOGIC PATH ---
-    if (transcript) {
-      // --- PATH 1: Handle Text Input ---
-      const model = genAI.getGenerativeModel({ model: selectedModel });
-      const chat = model.startChat({
-        history: [{ role: "user", parts: [{ text: systemPrompt }] }],
-        generationConfig: { responseMimeType: "application/json" },
+      if (!file) {
+        return NextResponse.json({ error: "No file uploaded." }, { status: 400 });
+      }
+
+      // 1. Send the file to AssemblyAI for transcription and diarization
+      // The SDK handles polling for completion under the hood.
+      const transcript = await assemblyClient.transcripts.transcribe({
+        audio: file,
+        speaker_labels: true, // This is the magic for speaker diarization
       });
+
+      if (transcript.status !== 'completed' || !transcript.utterances) {
+        throw new Error(`Transcription failed: ${transcript.status}`);
+      }
+
+      // 2. Format the result for our application and for Gemini
+      const labeledTranscript = {
+        speakers: [...new Set(transcript.utterances.map(u => `Speaker ${u.speaker}`))],
+        transcript: transcript.utterances.map(u => ({
+          speaker: `Speaker ${u.speaker}`,
+          text: u.text,
+        })),
+      };
+      const formattedTranscript = labeledTranscript.transcript.map(item => `${item.speaker}: ${item.text}`).join('\n');
+
+      // 3. Send to Gemini for analysis
+      const model = genAI.getGenerativeModel({ model: selectedModel });
+      const chat = model.startChat({ history: [{ role: "user", parts: [{ text: systemPrompt }] }], generationConfig: { responseMimeType: "application/json" } });
+      const result = await chat.sendMessage(formattedTranscript);
+      const analysis = JSON.parse(result.response.text());
+
+      // 4. Return the combined result
+      return NextResponse.json({ analysis, labeledTranscript });
+
+    }
+    // --- PATH 2: Handle Text Input ---
+    else if (contentType.includes('application/json')) {
+      const { transcript, model: selectedModel } = await req.json();
+      if (!transcript) {
+        return NextResponse.json({ error: "No transcript provided." }, { status: 400 });
+      }
+
+      const model = genAI.getGenerativeModel({ model: selectedModel });
+      const chat = model.startChat({ history: [{ role: "user", parts: [{ text: systemPrompt }] }], generationConfig: { responseMimeType: "application/json" } });
       const result = await chat.sendMessage(transcript);
       const analysis = JSON.parse(result.response.text());
-      // Return only the analysis, as there's no diarization
+
       return NextResponse.json({ analysis });
 
     } else {
-      // --- PATH 2: Handle Audio Input (Simulated) ---
-      const labeledTranscript = await mockTranscriptionService();
-      const formattedTranscript = formatTranscriptForAnalysis(labeledTranscript);
-      const model = genAI.getGenerativeModel({ model: selectedModel });
-      const chat = model.startChat({
-        history: [{ role: "user", parts: [{ text: systemPrompt }] }],
-        generationConfig: { responseMimeType: "application/json" },
-      });
-      const result = await chat.sendMessage(formattedTranscript);
-      const analysis = JSON.parse(result.response.text());
-      // Return both analysis and the labeled transcript
-      return NextResponse.json({ analysis, labeledTranscript });
+      return NextResponse.json({ error: `Unsupported content-type: ${contentType}` }, { status: 415 });
     }
 
   } catch (error) {
     console.error("Error processing request:", error);
-    return NextResponse.json({ error: "Failed to process request." }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+    return NextResponse.json({ error: `Failed to process request: ${errorMessage}` }, { status: 500 });
   }
 }
