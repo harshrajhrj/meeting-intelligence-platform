@@ -51,7 +51,7 @@ export const InteractiveResults = ({ analysis, labeledTranscript }: InteractiveR
 
   return (
     <div className="mt-12 space-y-8">
-      <InfoCard title="🎙️ Identified Speakers">
+      <InfoCard title="Identified Speakers">
         <p className="text-sm text-slate-400 mb-4">Assign names to the automatically detected speakers. The report will update in real-time.</p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {labeledTranscript.speakers.map(speakerId => (
@@ -70,11 +70,11 @@ export const InteractiveResults = ({ analysis, labeledTranscript }: InteractiveR
       </InfoCard>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <InfoCard title="📝 Meeting Summary">
+        <InfoCard title="Meeting Summary">
           <p>{updatedAnalysis.summary}</p>
         </InfoCard>
 
-        <InfoCard title="🗣️ Speaker Dominance">
+        <InfoCard title="Speaker Dominance">
           <div className="space-y-4">
             {/* ---- UPDATED: Use specific type instead of 'any' ---- */}
             {updatedAnalysis.speaker_dominance.map((speaker: SpeakerDominance, index: number) => (
@@ -91,7 +91,7 @@ export const InteractiveResults = ({ analysis, labeledTranscript }: InteractiveR
           </div>
         </InfoCard>
 
-        <InfoCard title="✅ Action Items">
+        <InfoCard title="Action Items">
           {updatedAnalysis.action_items.length > 0 ? (
             <ul className="list-disc list-inside space-y-2">
               {/* ---- UPDATED: Use specific type instead of 'any' ---- */}
@@ -104,7 +104,7 @@ export const InteractiveResults = ({ analysis, labeledTranscript }: InteractiveR
           ) : <p>No specific action items were identified.</p>}
         </InfoCard>
 
-        <InfoCard title="🎭 Key Sentiments">
+        <InfoCard title="Key Sentiments">
           {updatedAnalysis.key_sentiments.length > 0 ? (
             // ---- UPDATED: Use specific type instead of 'any' ----
             updatedAnalysis.key_sentiments.map((sentiment: KeySentiment, index: number) => (
@@ -116,7 +116,7 @@ export const InteractiveResults = ({ analysis, labeledTranscript }: InteractiveR
           ) : <p>No strong sentiments were identified.</p>}
         </InfoCard>
 
-        <InfoCard title="🚫 Interruptions">
+        <InfoCard title="Interruptions">
           {updatedAnalysis.interruptions.length > 0 ? (
             <ul className="list-disc list-inside space-y-2">
               {/* ---- UPDATED: Use specific type instead of 'any' ---- */}

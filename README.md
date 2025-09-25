@@ -3,6 +3,10 @@
 Tired of unproductive meetings where great ideas get lost and some voices go unheard? This project transforms raw meeting recordings into actionable, unbiased insights. It's a full-stack web application that leverages state-of-the-art AI to transcribe, identify speakers, and analyze conversational dynamics to foster more inclusive and effective team collaboration.
 
 -----
+## \#\# Demo
+Watch a quick walkthrough video below:
+
+[![Meeting Intelligence Platform Demo](./Demo.mp4)](./Demo.mp4)
 
 ## \#\# Core Features
 

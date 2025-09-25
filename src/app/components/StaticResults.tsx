@@ -12,11 +12,11 @@ export const StaticResults = ({ analysis }: StaticResultsProps) => {
 
   return (
     <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-      <InfoCard title="📝 Meeting Summary">
+      <InfoCard title="Meeting Summary">
         <p>{analysis.summary}</p>
       </InfoCard>
 
-      <InfoCard title="🗣️ Speaker Dominance">
+      <InfoCard title="Speaker Dominance">
         {analysis.speaker_dominance.map((speaker, index) => (
           <div key={index} className="space-y-2">
             <div className="flex justify-between mb-1">
@@ -31,7 +31,7 @@ export const StaticResults = ({ analysis }: StaticResultsProps) => {
       </InfoCard>
 
       {/* ---- COMPLETED: Action Items Card ---- */}
-      <InfoCard title="✅ Action Items">
+      <InfoCard title="Action Items">
         {analysis.action_items.length > 0 ? (
           <ul className="list-disc list-inside space-y-2">
             {analysis.action_items.map((item, index) => (
@@ -44,7 +44,7 @@ export const StaticResults = ({ analysis }: StaticResultsProps) => {
       </InfoCard>
 
       {/* ---- COMPLETED: Key Sentiments Card ---- */}
-      <InfoCard title="🎭 Key Sentiments">
+      <InfoCard title="Key Sentiments">
         {analysis.key_sentiments.length > 0 ? (
           analysis.key_sentiments.map((sentiment, index) => (
             <div key={index} className="border-l-4 p-3 rounded-r-md bg-slate-700/50" style={{ borderColor: sentiment.sentiment === 'Negative' ? '#f87171' : sentiment.sentiment === 'Positive' ? '#4ade80' : '#60a5fa' }}>
@@ -56,7 +56,7 @@ export const StaticResults = ({ analysis }: StaticResultsProps) => {
       </InfoCard>
 
       {/* ---- COMPLETED: Interruptions Card ---- */}
-      <InfoCard title="🚫 Interruptions">
+      <InfoCard title="Interruptions">
         {analysis.interruptions.length > 0 ? (
           <ul className="list-disc list-inside space-y-2">
             {analysis.interruptions.map((item, index) => (

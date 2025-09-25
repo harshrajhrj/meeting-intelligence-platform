@@ -12,11 +12,11 @@ export const AnalysisResults = ({ analysis }: AnalysisResultsProps) => {
 
   return (
     <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-      <InfoCard title="📝 Meeting Summary">
+      <InfoCard title="Meeting Summary">
         <p>{analysis.summary}</p>
       </InfoCard>
 
-      <InfoCard title="🗣️ Speaker Dominance">
+      <InfoCard title="Speaker Dominance">
         <div className="space-y-4">
           {analysis.speaker_dominance.map((speaker, index) => (
             <div key={index}>
@@ -32,7 +32,7 @@ export const AnalysisResults = ({ analysis }: AnalysisResultsProps) => {
         </div>
       </InfoCard>
 
-      <InfoCard title="✅ Action Items">
+      <InfoCard title="Action Items">
         {analysis.action_items.length > 0 ? (
           <ul className="list-disc list-inside space-y-2">
             {analysis.action_items.map((item, index) => (
@@ -44,7 +44,7 @@ export const AnalysisResults = ({ analysis }: AnalysisResultsProps) => {
         ) : <p>No specific action items were identified.</p>}
       </InfoCard>
 
-      <InfoCard title="🎭 Key Sentiments">
+      <InfoCard title="Key Sentiments">
         {analysis.key_sentiments.length > 0 ? (
           analysis.key_sentiments.map((sentiment, index) => (
             <div key={index} className="border-l-4 p-3 rounded-r-md bg-slate-700/50" style={{ borderColor: sentiment.sentiment === 'Negative' ? '#f87171' : sentiment.sentiment === 'Positive' ? '#4ade80' : '#60a5fa' }}>
@@ -55,7 +55,7 @@ export const AnalysisResults = ({ analysis }: AnalysisResultsProps) => {
         ) : <p>No strong sentiments were identified.</p>}
       </InfoCard>
 
-      <InfoCard title="🚫 Interruptions">
+      <InfoCard title="Interruptions">
         {analysis.interruptions.length > 0 ? (
           <ul className="list-disc list-inside space-y-2">
             {analysis.interruptions.map((item, index) => (
