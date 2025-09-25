@@ -6,7 +6,7 @@ Tired of unproductive meetings where great ideas get lost and some voices go unh
 ## \#\# Demo
 Watch a quick walkthrough video below:
 
-[![Meeting Intelligence Platform Demo](./Demo.mp4)](./Demo.mp4)
+[![Meeting Intelligence Platform Demo](./Demo.png)](./Demo.mp4)
 
 ## \#\# Core Features
 
