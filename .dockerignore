@@ -1,0 +1,15 @@
+# .dockerignore
+
+# Dependencies
+node_modules
+
+# Next.js build output
+.next
+
+# Development files
+*.log
+.env.local
+.env.development.local
+
+# Version control
+.git
