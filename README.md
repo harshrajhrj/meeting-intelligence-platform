@@ -1,20 +1,20 @@
-# Meeting Intelligence Platform 🚀
+# Meeting Intelligence Platform
 
 Tired of unproductive meetings where great ideas get lost and some voices go unheard? This project transforms raw meeting recordings into actionable, unbiased insights. It's a full-stack web application that leverages state-of-the-art AI to transcribe, identify speakers, and analyze conversational dynamics to foster more inclusive and effective team collaboration.
 
 -----
 
-## \#\# Core Features ✨
+## \#\# Core Features
 
-  * **🔊 Audio/Video Analysis:** Simply upload a meeting recording (MP3, MP4, WAV, etc.) and let the platform handle the rest.
-  * **🗣️ Automatic Speaker Diarization:** The magic happens here. Using AssemblyAI, the tool automatically detects and separates different speakers (`Speaker A`, `Speaker B`) from a single audio track.
-  * **🤖 GenAI-Powered Insights:** Google Gemini analyzes the conversation to detect speaker dominance, interruptions, key sentiments, and extracts a concise summary with actionable tasks.
-  * \*\* interactive Dashboard:\*\* Don't just read a report—engage with it\! Assign real names to the detected speakers (`Speaker A` -\> `Sarah`), and watch the entire analysis update in real-time.
-  * **📝 Dual-Mode Input:** No recording? No problem. You can also paste a pre-written transcript for a quick, text-based analysis.
+  * **Audio/Video Analysis:** Simply upload a meeting recording (MP3, MP4, WAV, etc.) and let the platform handle the rest.
+  * **Automatic Speaker Diarization:** The magic happens here. Using AssemblyAI, the tool automatically detects and separates different speakers (`Speaker A`, `Speaker B`) from a single audio track.
+  * **GenAI-Powered Insights:** Google Gemini analyzes the conversation to detect speaker dominance, interruptions, key sentiments, and extracts a concise summary with actionable tasks.
+  * **Interactive Dashboard:** Don't just read a report—engage with it\! Assign real names to the detected speakers (`Speaker A` -\> `Sarah`), and watch the entire analysis update in real-time.
+  * **Dual-Mode Input:** No recording? No problem. You can also paste a pre-written transcript for a quick, text-based analysis.
 
 -----
 
-## \#\# Tech Stack 🛠️
+## \#\# Tech Stack
 
   * **Frontend:** Next.js, React, TypeScript, Tailwind CSS
   * **Backend:** Next.js API Routes (Serverless Functions)
@@ -80,7 +80,7 @@ Open [http://localhost:3000](https://www.google.com/search?q=http://localhost:30
 
 -----
 
-## \#\# Running with Docker 🐳
+## \#\# Running with Docker
 
 You can also build and run the entire application inside a Docker container.
 
@@ -127,11 +127,11 @@ The project uses the Next.js App Router, with a focus on component-based archite
 
 -----
 
-## \#\# Future Roadmap 🗺️
+## \#\# Future Roadmap
 
 This project has a lot of potential for growth. Here are some ideas for future features:
 
-  * **📈 Meeting Coach Dashboard:** Track communication metrics over time to see team improvement.
-  * **🔗 Calendar Integration:** Connect to Google Calendar or Outlook to automatically fetch and analyze meeting recordings.
-  * **🌐 Real-time Analysis:** Analyze meeting audio in real-time from the microphone.
-  * **💾 Database Integration:** Save and revisit past meeting analyses.
+  * **Meeting Coach Dashboard:** Track communication metrics over time to see team improvement.
+  * **Calendar Integration:** Connect to Google Calendar or Outlook to automatically fetch and analyze meeting recordings.
+  * **Real-time Analysis:** Analyze meeting audio in real-time from the microphone.
+  * **Database Integration:** Save and revisit past meeting analyses.
