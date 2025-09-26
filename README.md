@@ -3,12 +3,12 @@
 Tired of unproductive meetings where great ideas get lost and some voices go unheard? This project transforms raw meeting recordings into actionable, unbiased insights. It's a full-stack web application that leverages state-of-the-art AI to transcribe, identify speakers, and analyze conversational dynamics to foster more inclusive and effective team collaboration.
 
 -----
-## \#\# Demo
+## Demo
 Watch a quick walkthrough video below:
 
 [![Meeting Intelligence Platform Demo](./Demo.png)](./Demo.mp4)
 
-## \#\# Core Features
+## Core Features
 
   * **Audio/Video Analysis:** Simply upload a meeting recording (MP3, MP4, WAV, etc.) and let the platform handle the rest.
   * **Automatic Speaker Diarization:** The magic happens here. Using AssemblyAI, the tool automatically detects and separates different speakers (`Speaker A`, `Speaker B`) from a single audio track.
@@ -18,7 +18,7 @@ Watch a quick walkthrough video below:
 
 -----
 
-## \#\# Tech Stack
+## Tech Stack
 
   * **Frontend:** Next.js, React, TypeScript, Tailwind CSS
   * **Backend:** Next.js API Routes (Serverless Functions)
@@ -29,11 +29,11 @@ Watch a quick walkthrough video below:
 
 -----
 
-## \#\# Getting Started
+## Getting Started
 
 Follow these steps to get the project running on your local machine.
 
-### \#\#\# 1. Prerequisites
+### 1. Prerequisites
 
 Make sure you have the following installed:
 
@@ -41,20 +41,20 @@ Make sure you have the following installed:
   * [Docker](https://www.docker.com/products/docker-desktop/) (optional, for containerized setup)
   * [Git](https://git-scm.com/)
 
-### \#\#\# 2. Clone the Repository
+### 2. Clone the Repository
 
 ```bash
 git clone https://github.com/your-username/meeting-intelligence-platform.git
 cd meeting-intelligence-platform
 ```
 
-### \#\#\# 3. Install Dependencies
+### 3. Install Dependencies
 
 ```bash
 npm install
 ```
 
-### \#\#\# 4. Set Up Environment Variables
+### 4. Set Up Environment Variables
 
 This is the most important step. You'll need API keys from both Google and AssemblyAI.
 
@@ -74,7 +74,7 @@ GOOGLE_API_KEY="YOUR_GOOGLE_GEMINI_API_KEY"
 ASSEMBLYAI_API_KEY="YOUR_ASSEMBLYAI_API_KEY"
 ```
 
-### \#\#\# 5. Run the Development Server
+### 5. Run the Development Server
 
 ```bash
 npm run dev
@@ -84,7 +84,7 @@ Open [http://localhost:3000](https://www.google.com/search?q=http://localhost:30
 
 -----
 
-## \#\# Running with Docker
+## Running with Docker
 
 You can also build and run the entire application inside a Docker container.
 
@@ -108,7 +108,7 @@ The application will be available at [http://localhost:3000](https://www.google.
 
 -----
 
-## \#\# Project Structure
+## Project Structure
 
 The project uses the Next.js App Router, with a focus on component-based architecture.
 
@@ -131,7 +131,7 @@ The project uses the Next.js App Router, with a focus on component-based archite
 
 -----
 
-## \#\# Future Roadmap
+## Future Roadmap
 
 This project has a lot of potential for growth. Here are some ideas for future features:
 
